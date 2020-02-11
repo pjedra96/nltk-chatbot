@@ -1,0 +1,132 @@
+@use postcss-nested;
+/****** General page styling ******/
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 14px Helvetica, Arial; 
+  display: flex ;
+  flex-direction: column;
+  align-items: center; 
+}
+form { background: #fff; padding: 5px; position: fixed; bottom: 0; width: 100%; border-color: #000; border-top-style: solid; border-top-width: 1px;}
+form input { border-style: solid; border-width: 1px; padding: 10px; width: 70%; margin-right: .5%; }
+form button { width: 10%; background: rgb(130, 224, 255); padding: 10px; margin-left: 2%; }
+#messageContent{ margin-bottom: 60px; width:100%;}
+#messages { list-style-type: none; margin: 15px 10px 0px 10px; /* top, right, bottom, left */ padding: 0;}
+/*#messages li { padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #eee; }*/
+
+#user_input,#bot_response {
+    padding: 14px 18px; /* top-bottom, left-right */
+    max-width: 50%;
+    clear: both;
+    position: relative;
+}
+
+#user_input{
+    float: left;
+    margin-right: auto;
+    -webkit-border-radius: 8px 8px 8px 0px;
+    -moz-border-radius: 8px 8px 8px 0px;
+    -o-border-radius: 8px 8px 8px 0px;
+    -ms-border-radius: 8px 8px 8px 0px;
+    border-radius: 8px 8px 8px 0px;
+    background-color: #5ac92a;
+    color: #ffffff;
+}
+
+#user_input:before {
+    border-bottom: 10px solid #5ac92a;
+    border-left: 9px solid rgba(0, 0, 0, 0);
+    position: absolute;
+    bottom: 0;
+    left: -8px;
+    content: "";
+}
+
+#bot_response{
+    float: right;
+    margin-left: auto;
+    text-align: right;
+    -webkit-border-radius: 8px 8px 0px 8px;
+    -moz-border-radius: 8px 8px 0px 8px;
+    -o-border-radius: 8px 8px 0px 8px;
+    -ms-border-radius: 8px 8px 0px 8px;
+    border-radius: 8px 8px 0px 8px;
+    background-color: #e02222;
+    color: white;
+}
+
+#bot_response:before {
+    border-bottom: 9px solid #e02222;
+    border-right: 9px solid rgba(0, 0, 0, 0);
+    position: absolute;
+    bottom: 0;
+    right: -8px;
+    content: "";
+}
+
+[contenteditable=true]:empty:before { 
+  content: attr(placeholder); 
+  display: block; /* For Firefox */ 
+}
+
+div[contenteditable=true] {
+  border: 1px solid black;
+  display:inline-block;
+  width:85%;
+  padding: 10px;
+  font-size:1.1em;
+  float:left;
+}
+
+#messages img{ width:16px; height:16px; }
+div[contenteditable=true] img{ width:16px; height:16px; }
+
+pre {
+  background: #EEE;
+  padding: 5px;
+  width: 290px;
+}
+
+.top {
+  top: 130%;
+  bottom: auto
+}
+
+/****** end general ******/
+
+
+#canvas {
+  border: 1px solid red;
+  margin: auto
+}
+
+
+/**** start madia Query ****/
+
+@media only screen and (max-width : 1200px) {
+}
+
+    /* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+}
+
+    /* Small Devices, Tablets */
+ @media only screen and (max-width : 768px) {
+}
+
+    /* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+  div[contenteditable=true] {
+    width:100%;
+  }
+
+  form button { 
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 0; }
+}
+
+/* Custom, iPhone Retina */ 
+
+@media only screen and (max-width : 320px) {
+}

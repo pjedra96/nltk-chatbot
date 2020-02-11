@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Python Chatbot Page</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+  </head>
+  <body>
+
+    <div id="messageContent">
+        <ul id="messages">
+            <li id='bot_response'> Greetings, user ! My name is pybot, and I am an artificial intelligence project developed to talk to you :)</li>
+        </ul>
+    </div>
+    <form action="/" method="POST" id="chatForm">
+        <div id="txt" class="input" autocomplete="off" autofocus="on" contenteditable="true" placeholder="Enter message here..."></div>
+        <button>Send</button>
+    </form>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      // submit text message without reload/refresh the page
+      $('form').submit(function(e){
+        e.preventDefault(); // prevents page reloading
+        $('#txt').focus();
+    
+        if($('#txt').text()){
+            // Append our message to the chat window
+            let message = $('#txt').text();
+            $('#messages').append($('<li id="user_input">').html(message));
+
+            // Send the message
+            $.get("/message", { message: $('#txt').text()}).done(function(data){
+                $('#messages').append($('<li id="bot_response">').html(data));
+                // Auto Scroll to the bottom of the page if the content goes out of the viewport
+                $('html, body').animate({scrollTop:$(document).height()}, 'slow');
+            });
+            // Auto clear the input box once the message has been sent
+            $('#txt').text('');
+        }
+
+        return false;
+      });
+
+      /*  Prevent the message input from inserting a new line when ENTER key is pressed
+          Instead set ENTER to be used for sending messages and a combination of keys - SHIFT + ENTER to be used for adding a new line 
+      */
+      $('div[contenteditable]').keydown(function(e) {
+        if (!e) {
+            e = window.event;
+        }
+        if (e.keyCode == 13){
+            if (!event.shiftKey){ 
+                $('form').submit();
+                if (e.preventDefault) {
+                    e.preventDefault();
+                } else {
+                    e.returnValue = false;
+                }
+            }
+        }
+      });
+    </script>
+  </body>
+</html>
