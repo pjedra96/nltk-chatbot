@@ -1,0 +1,429 @@
+{
+  "_readme": [
+    "This file is the chatbot's brain. Edit it to change what the bot knows and says.",
+    "Each intent has 'patterns' (ways a person might ask something) and 'responses' (what the bot replies; one is picked at random).",
+    "Add more patterns to help the bot recognise different wordings of the same question.",
+    "Use {name} in a response to insert the name the person asked to be called. If no name is known, it is removed automatically.",
+    "Use {bot_name} to insert the bot's name.",
+    "Anything in [square brackets] in the company section is a placeholder - replace it with real details."
+  ],
+
+  "bot_name": "PyBot",
+
+  "fallback_responses": [
+    "Sorry {name}, I don't know that one yet. You can ask me about Biodata Ltd, ask for a random fact, or just chat.",
+    "Hmm, I'm not sure I understand. Could you try asking that a different way?",
+    "I don't have an answer for that yet, but I'm always learning. Try asking me for a fun fact!"
+  ],
+
+  "name_handling": {
+    "set_responses": [
+      "Nice to meet you, {name}!",
+      "Got it - I'll call you {name} from now on.",
+      "Okay, {name} it is!"
+    ],
+    "tell_responses": [
+      "You asked me to call you {name}.",
+      "I've been calling you {name}. Would you like me to call you something else? Just say \"call me ...\"."
+    ],
+    "unknown_responses": [
+      "I don't know your name yet. You can tell me by saying \"call me ...\" or \"my name is ...\".",
+      "You haven't told me what to call you. Just say \"call me ...\"!"
+    ],
+    "invalid_responses": [
+      "Sorry, that doesn't look like a name I can use. Try something like \"call me Sam\"."
+    ],
+    "forget_responses": [
+      "No problem, I've forgotten the name. What would you like me to call you instead?",
+      "Okay, I won't use that name any more."
+    ]
+  },
+
+  "intents": [
+    {
+      "tag": "greeting",
+      "category": "small_talk",
+      "patterns": ["hi", "hello", "hey", "hiya", "greetings", "good morning", "good afternoon", "good evening", "howdy", "yo", "sup", "what's up", "hello there", "hey there"],
+      "responses": ["Hello {name}! How can I help you today?", "Hi {name}! Nice to see you.", "Hey {name}! What would you like to talk about?"]
+    },
+    {
+      "tag": "how_are_you",
+      "category": "small_talk",
+      "patterns": ["how are you", "how are you doing", "how are you today", "hello how are you", "hi how are you", "how's it going", "how do you do", "are you okay", "how are things", "how have you been", "you alright"],
+      "responses": ["I'm doing great, thanks for asking! How about you, {name}?", "All systems running smoothly! How are you?", "I'm good, thank you. How's your day going?"]
+    },
+    {
+      "tag": "user_good",
+      "category": "small_talk",
+      "patterns": ["i'm good", "i am fine", "i'm great", "not bad", "doing well", "i'm okay", "pretty good", "all good", "fine thanks", "very well thank you"],
+      "responses": ["Glad to hear it, {name}!", "That's great! Anything I can help you with?", "Good to hear. What shall we talk about?"]
+    },
+    {
+      "tag": "user_sad",
+      "category": "small_talk",
+      "patterns": ["i'm sad", "i feel bad", "i'm not okay", "bad day", "i'm upset", "i feel down", "i'm tired", "i'm stressed", "not great", "i'm lonely"],
+      "responses": ["I'm sorry to hear that, {name}. I'm here if you want to chat.", "That sounds tough. Want to hear a fun fact to take your mind off it?", "Sorry you're feeling that way. Remember to take a break - you deserve it."]
+    },
+    {
+      "tag": "bot_name",
+      "category": "small_talk",
+      "patterns": ["what is your name", "what's your name", "who are you", "what are you called", "do you have a name", "tell me your name", "introduce yourself"],
+      "responses": ["I'm {bot_name}, a chatbot for Biodata Ltd. I can chat, share facts and answer questions about the company.", "My name is {bot_name}! Nice to meet you."]
+    },
+    {
+      "tag": "bot_creator",
+      "category": "small_talk",
+      "patterns": ["who made you", "who created you", "who built you", "who is your creator", "who programmed you", "who developed you"],
+      "responses": ["I was built by the team at Biodata Ltd in Manchester, using Python and NLTK.", "Biodata Ltd created me. I'm written in Python!"]
+    },
+    {
+      "tag": "are_you_human",
+      "category": "small_talk",
+      "patterns": ["are you human", "are you a robot", "are you a bot", "are you real", "am i talking to a person", "are you a computer", "are you ai"],
+      "responses": ["I'm a chatbot, not a human - but I'm happy to chat!", "I'm a computer program. No coffee breaks needed!"]
+    },
+    {
+      "tag": "bot_age",
+      "category": "small_talk",
+      "patterns": ["how old are you", "what is your age", "when were you born", "when were you made"],
+      "responses": ["Age is just a number for a chatbot! I'm young, but I learn something new every time someone edits my knowledge file.", "I'm only a few lines of Python old."]
+    },
+    {
+      "tag": "capabilities",
+      "category": "small_talk",
+      "patterns": ["what can you do", "help", "what do you know", "how can you help me", "what are your features", "what can i ask you", "what do you do"],
+      "responses": ["I can chat, tell you a joke, share a random fact, answer general knowledge questions, and tell you about Biodata Ltd. You can also tell me what to call you - just say \"call me ...\"."]
+    },
+    {
+      "tag": "thanks",
+      "category": "small_talk",
+      "patterns": ["thanks", "thank you", "thanks a lot", "cheers", "much appreciated", "thank you very much", "ta", "thanks for your help"],
+      "responses": ["You're welcome, {name}!", "Happy to help!", "Any time!"]
+    },
+    {
+      "tag": "goodbye",
+      "category": "small_talk",
+      "patterns": ["bye", "goodbye", "see you", "see you later", "talk to you later", "i have to go", "cya", "good night", "farewell", "catch you later"],
+      "responses": ["Goodbye {name}! Take care.", "See you later, {name}!", "Bye! It was nice chatting with you."]
+    },
+    {
+      "tag": "joke",
+      "category": "small_talk",
+      "patterns": ["tell me a joke", "say something funny", "make me laugh", "do you know any jokes", "joke", "another joke"],
+      "responses": [
+        "Why do programmers prefer dark mode? Because light attracts bugs.",
+        "Why did the scarecrow win an award? Because he was outstanding in his field.",
+        "I told my computer I needed a break, and it said: 'No problem, I'll go to sleep.'",
+        "Why don't scientists trust atoms? Because they make up everything.",
+        "What do you call a fake noodle? An impasta.",
+        "Why did the developer go broke? Because he used up all his cache."
+      ]
+    },
+    {
+      "tag": "laugh",
+      "category": "small_talk",
+      "patterns": ["haha", "lol", "that's funny", "hahaha", "lmao", "good one", "funny"],
+      "responses": ["Glad you liked it!", "I'm here all week!", "Ha! Want another one?"]
+    },
+    {
+      "tag": "compliment",
+      "category": "small_talk",
+      "patterns": ["you are smart", "you're clever", "you are great", "i like you", "you're awesome", "you are helpful", "good bot", "well done"],
+      "responses": ["Thank you, {name}! That's very kind.", "Aw, thanks! You're pretty great yourself."]
+    },
+    {
+      "tag": "insult",
+      "category": "small_talk",
+      "patterns": ["you are stupid", "you're dumb", "you are useless", "bad bot", "you suck", "i hate you", "you're annoying"],
+      "responses": ["Sorry I let you down. I'm still learning - try asking me in a different way?", "I'll try to do better! What were you looking for?"]
+    },
+    {
+      "tag": "sorry",
+      "category": "small_talk",
+      "patterns": ["sorry", "my bad", "apologies", "i apologise", "excuse me"],
+      "responses": ["No worries at all!", "That's okay, {name}."]
+    },
+    {
+      "tag": "bored",
+      "category": "small_talk",
+      "patterns": ["i'm bored", "i am bored", "entertain me", "nothing to do", "this is boring"],
+      "responses": ["Let's fix that! Ask me for a joke or a random fact.", "How about a fun fact? Just say \"tell me a fact\"."]
+    },
+    {
+      "tag": "favourite_colour",
+      "category": "small_talk",
+      "patterns": ["what is your favourite colour", "favorite color", "what colour do you like", "do you have a favourite colour"],
+      "responses": ["I'm quite fond of blue - it's the colour of my chat bubbles!", "Probably electric blue."]
+    },
+    {
+      "tag": "favourite_food",
+      "category": "small_talk",
+      "patterns": ["what is your favourite food", "do you eat", "are you hungry", "favorite food", "what do you like to eat"],
+      "responses": ["I run on electricity, but if I could eat I'd try a proper Manchester tart.", "Bytes, mostly. Ha!"]
+    },
+    {
+      "tag": "hobbies",
+      "category": "small_talk",
+      "patterns": ["what do you do for fun", "do you have hobbies", "what are your hobbies", "what do you like doing"],
+      "responses": ["I enjoy chatting with people and collecting fun facts.", "Reading my knowledge file over and over. It's a page-turner!"]
+    },
+    {
+      "tag": "where_live",
+      "category": "small_talk",
+      "patterns": ["where do you live", "where are you from", "where are you", "where are you based"],
+      "responses": ["I live on a server, but my home is Biodata Ltd in Manchester, UK."]
+    },
+    {
+      "tag": "weather_chat",
+      "category": "small_talk",
+      "patterns": ["how is the weather", "what's the weather like", "is it raining", "weather today", "will it rain"],
+      "responses": ["I can't check the weather, but if you're in Manchester, an umbrella is never a bad idea!"]
+    },
+    {
+      "tag": "meaning_of_life",
+      "category": "small_talk",
+      "patterns": ["what is the meaning of life", "why are we here", "what is the purpose of life"],
+      "responses": ["According to The Hitchhiker's Guide to the Galaxy, it's 42.", "Good company, good conversation, and a good cup of tea."]
+    },
+    {
+      "tag": "love",
+      "category": "small_talk",
+      "patterns": ["do you love me", "will you marry me", "i love you", "are you single", "do you have a girlfriend", "do you have a boyfriend"],
+      "responses": ["That's sweet, {name}, but I'm happily committed to my knowledge file.", "I'm flattered! But I'm just a chatbot."]
+    },
+    {
+      "tag": "yes",
+      "category": "small_talk",
+      "patterns": ["yes", "yeah", "yep", "sure", "okay", "ok", "of course", "absolutely"],
+      "responses": ["Great!", "Okay, what would you like to know?"]
+    },
+    {
+      "tag": "no",
+      "category": "small_talk",
+      "patterns": ["no", "nope", "nah", "not really", "no thanks"],
+      "responses": ["No problem.", "Okay! Let me know if you need anything."]
+    },
+
+    {
+      "tag": "random_fact",
+      "category": "facts",
+      "patterns": ["tell me a fact", "random fact", "fun fact", "tell me something interesting", "give me a fact", "another fact", "did you know", "teach me something", "interesting fact"],
+      "responses": [
+        "Honey never spoils. Edible honey has been found in ancient Egyptian tombs.",
+        "Octopuses have three hearts and blue blood.",
+        "A day on Venus is longer than a year on Venus.",
+        "Bananas are berries, but strawberries aren't.",
+        "The Eiffel Tower can grow about 15 cm taller in summer because the metal expands in the heat.",
+        "There are more possible games of chess than atoms in the observable universe.",
+        "Wombat poo is cube-shaped.",
+        "Sharks existed before trees.",
+        "A group of flamingos is called a 'flamboyance'.",
+        "The human brain uses about 20% of the body's energy.",
+        "Lightning is about five times hotter than the surface of the Sun.",
+        "Sloths can hold their breath longer than dolphins - up to 40 minutes.",
+        "The shortest war in history, between Britain and Zanzibar in 1896, lasted around 38 minutes.",
+        "Cows have best friends and get stressed when separated.",
+        "Your stomach gets a new lining every few days so it doesn't digest itself.",
+        "The world's first stored-program computer, the 'Manchester Baby', ran its first program in Manchester in 1948."
+      ]
+    },
+    {
+      "tag": "fact_everest",
+      "category": "facts",
+      "patterns": ["what is the tallest mountain", "highest mountain in the world", "how tall is mount everest", "how high is everest"],
+      "responses": ["Mount Everest is the highest mountain above sea level, at about 8,849 metres (29,032 feet)."]
+    },
+    {
+      "tag": "fact_ocean",
+      "category": "facts",
+      "patterns": ["what is the largest ocean", "biggest ocean", "which ocean is the largest"],
+      "responses": ["The Pacific Ocean is the largest - it covers about a third of the Earth's surface."]
+    },
+    {
+      "tag": "fact_planets",
+      "category": "facts",
+      "patterns": ["how many planets are there", "how many planets in the solar system", "name the planets", "what are the planets"],
+      "responses": ["There are eight planets in our solar system: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune."]
+    },
+    {
+      "tag": "fact_largest_planet",
+      "category": "facts",
+      "patterns": ["what is the largest planet", "biggest planet", "which planet is the biggest"],
+      "responses": ["Jupiter is the largest planet - more than 1,300 Earths could fit inside it."]
+    },
+    {
+      "tag": "fact_smallest_planet",
+      "category": "facts",
+      "patterns": ["what is the smallest planet", "smallest planet in the solar system"],
+      "responses": ["Mercury is the smallest planet, and also the closest to the Sun."]
+    },
+    {
+      "tag": "fact_speed_of_light",
+      "category": "facts",
+      "patterns": ["what is the speed of light", "how fast is light", "speed of light"],
+      "responses": ["Light travels at about 299,792 kilometres per second - fast enough to go around the Earth about 7.5 times in one second."]
+    },
+    {
+      "tag": "fact_moon_landing",
+      "category": "facts",
+      "patterns": ["when did man land on the moon", "first moon landing", "who was the first person on the moon", "when was the moon landing"],
+      "responses": ["Neil Armstrong became the first person to walk on the Moon on 20 July 1969, during the Apollo 11 mission."]
+    },
+    {
+      "tag": "fact_capital_uk",
+      "category": "facts",
+      "patterns": ["what is the capital of the uk", "capital of england", "capital of britain", "what is the capital of the united kingdom"],
+      "responses": ["The capital of the United Kingdom is London."]
+    },
+    {
+      "tag": "fact_capital_france",
+      "category": "facts",
+      "patterns": ["what is the capital of france", "capital of france"],
+      "responses": ["The capital of France is Paris."]
+    },
+    {
+      "tag": "fact_continents",
+      "category": "facts",
+      "patterns": ["how many continents are there", "name the continents", "what are the continents"],
+      "responses": ["There are seven continents: Africa, Antarctica, Asia, Australia (Oceania), Europe, North America and South America."]
+    },
+    {
+      "tag": "fact_largest_country",
+      "category": "facts",
+      "patterns": ["what is the largest country", "biggest country in the world", "which country is the largest"],
+      "responses": ["Russia is the largest country by area, covering about 17 million square kilometres."]
+    },
+    {
+      "tag": "fact_longest_river",
+      "category": "facts",
+      "patterns": ["what is the longest river", "longest river in the world"],
+      "responses": ["The Nile is usually considered the longest river, at about 6,650 km - though some measurements put the Amazon slightly ahead."]
+    },
+    {
+      "tag": "fact_bones",
+      "category": "facts",
+      "patterns": ["how many bones are in the human body", "how many bones do humans have", "number of bones in body"],
+      "responses": ["An adult human has 206 bones. Babies are born with around 300, which fuse together as they grow."]
+    },
+    {
+      "tag": "fact_water_boiling",
+      "category": "facts",
+      "patterns": ["what temperature does water boil", "boiling point of water", "when does water freeze", "freezing point of water"],
+      "responses": ["At sea level, water boils at 100°C (212°F) and freezes at 0°C (32°F)."]
+    },
+    {
+      "tag": "fact_mona_lisa",
+      "category": "facts",
+      "patterns": ["who painted the mona lisa", "mona lisa painter", "who made the mona lisa"],
+      "responses": ["Leonardo da Vinci painted the Mona Lisa in the early 1500s. It hangs in the Louvre in Paris."]
+    },
+    {
+      "tag": "fact_shakespeare",
+      "category": "facts",
+      "patterns": ["who wrote romeo and juliet", "who wrote hamlet", "who was shakespeare"],
+      "responses": ["William Shakespeare wrote Romeo and Juliet, Hamlet and around 37 other plays. He was born in Stratford-upon-Avon in 1564."]
+    },
+    {
+      "tag": "fact_fastest_animal",
+      "category": "facts",
+      "patterns": ["what is the fastest animal", "fastest land animal", "how fast is a cheetah"],
+      "responses": ["The cheetah is the fastest land animal, reaching about 100-120 km/h in short bursts. The fastest bird, the peregrine falcon, can dive at over 300 km/h."]
+    },
+    {
+      "tag": "fact_tallest_animal",
+      "category": "facts",
+      "patterns": ["what is the tallest animal", "tallest animal in the world"],
+      "responses": ["The giraffe is the tallest animal - males can be over 5.5 metres tall."]
+    },
+    {
+      "tag": "fact_largest_animal",
+      "category": "facts",
+      "patterns": ["what is the largest animal", "biggest animal ever", "how big is a blue whale"],
+      "responses": ["The blue whale is the largest animal known to have ever lived, growing up to about 30 metres long."]
+    },
+    {
+      "tag": "fact_sun",
+      "category": "facts",
+      "patterns": ["how far is the sun", "distance to the sun", "how hot is the sun", "what is the sun"],
+      "responses": ["The Sun is about 150 million kilometres from Earth. Its surface is around 5,500°C, and light from it takes about 8 minutes to reach us."]
+    },
+    {
+      "tag": "fact_dna",
+      "category": "facts",
+      "patterns": ["what is dna", "what does dna stand for", "who discovered dna structure"],
+      "responses": ["DNA stands for deoxyribonucleic acid - the molecule that carries genetic instructions. Its double-helix structure was described in 1953 by Watson and Crick, building on Rosalind Franklin's X-ray images."]
+    },
+    {
+      "tag": "fact_manchester",
+      "category": "facts",
+      "patterns": ["tell me about manchester", "facts about manchester", "what is manchester famous for", "manchester history"],
+      "responses": [
+        "Manchester is often called the world's first industrial city - it was at the heart of the Industrial Revolution.",
+        "The 'Manchester Baby', the world's first stored-program computer, ran its first program at the University of Manchester in 1948.",
+        "Ernest Rutherford carried out his famous atom-splitting experiments at the University of Manchester, around 1917.",
+        "Graphene, the world's thinnest material, was first isolated at the University of Manchester in 2004, winning a Nobel Prize in 2010."
+      ]
+    },
+    {
+      "tag": "fact_turing",
+      "category": "facts",
+      "patterns": ["who was alan turing", "alan turing", "who invented the computer", "father of computer science"],
+      "responses": ["Alan Turing was a British mathematician often called the father of computer science. He helped break the Enigma code in WW2 and later worked at the University of Manchester. Charles Babbage designed the first mechanical computer in the 1800s."]
+    },
+
+    {
+      "tag": "company_about",
+      "category": "company",
+      "patterns": ["what is biodata", "tell me about biodata", "what does biodata do", "about the company", "who are you as a company", "what is biodata ltd", "tell me about the company", "what does your company do", "what do you guys do"],
+      "responses": ["Biodata Ltd is a company based in Manchester, UK. [Add a one or two sentence description of what Biodata does here.]"]
+    },
+    {
+      "tag": "company_location",
+      "category": "company",
+      "patterns": ["where is biodata", "where are you located", "where is the company based", "where is your office", "what is your address", "where can i find you", "location"],
+      "responses": ["Biodata Ltd is based in Manchester, UK. [Add the full office address here.]"]
+    },
+    {
+      "tag": "company_contact",
+      "category": "company",
+      "patterns": ["how can i contact you", "contact details", "what is your phone number", "what is your email", "how do i get in touch", "can i speak to someone", "contact biodata"],
+      "responses": ["You can get in touch with Biodata Ltd by [email address] or [phone number]."]
+    },
+    {
+      "tag": "company_hours",
+      "category": "company",
+      "patterns": ["what are your opening hours", "when are you open", "are you open today", "office hours", "what time do you open", "what time do you close", "are you open on weekends"],
+      "responses": ["Our office hours are [opening hours, e.g. Monday to Friday, 9am to 5pm]."]
+    },
+    {
+      "tag": "company_services",
+      "category": "company",
+      "patterns": ["what services do you offer", "what products do you have", "what do you sell", "what can biodata do for me", "your services", "your products"],
+      "responses": ["Biodata Ltd offers [list your main products or services here]."]
+    },
+    {
+      "tag": "company_website",
+      "category": "company",
+      "patterns": ["what is your website", "do you have a website", "website", "where can i read more"],
+      "responses": ["You can find more about Biodata Ltd at [website address]."]
+    },
+    {
+      "tag": "company_careers",
+      "category": "company",
+      "patterns": ["are you hiring", "do you have any jobs", "job vacancies", "how can i work for you", "careers", "can i apply for a job"],
+      "responses": ["For current job opportunities at Biodata Ltd, please [say where vacancies are posted, or who to email]."]
+    },
+    {
+      "tag": "company_founded",
+      "category": "company",
+      "patterns": ["when was biodata founded", "how old is the company", "when did biodata start", "company history", "who founded biodata"],
+      "responses": ["Biodata Ltd was founded in [year] by [founder name]."]
+    },
+    {
+      "tag": "company_team",
+      "category": "company",
+      "patterns": ["how many employees", "how big is the company", "who works at biodata", "tell me about the team", "how many people work there"],
+      "responses": ["Biodata Ltd has [number] people working in Manchester. [Add a line about the team here.]"]
+    }
+  ]
+}

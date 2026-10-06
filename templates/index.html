@@ -2,78 +2,98 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Python Chatbot Page</title>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <title>PyBot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
-
   </head>
   <body>
+    <div class="chat">
+      <header class="chat-header">
+        <div class="avatar" aria-hidden="true">P</div>
+        <div>
+          <h1>PyBot</h1>
+          <p class="status"><span class="dot"></span>Online</p>
+        </div>
+      </header>
 
-    <div id="messageContent">
-        <ul id="messages">
-            <li id='bot_response'> Greetings, user ! My name is pybot, and I am an artificial intelligence project developed to talk to you :)</li>
-        </ul>
+      <main id="messages" class="messages" aria-live="polite">
+        <div class="message bot">
+          <div class="bubble">Hi! I'm PyBot from Biodata Ltd. Ask me about the company, ask for a fun fact, or just chat. You can tell me what to call you by saying "call me ...".</div>
+        </div>
+      </main>
+
+      <form id="chatForm" class="composer" autocomplete="off">
+        <textarea id="txt" rows="1" placeholder="Type a message…" aria-label="Message" autofocus></textarea>
+        <button type="submit" id="send" aria-label="Send">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12.6 2-12.6 2z"/></svg>
+        </button>
+      </form>
     </div>
-    <form action="/" method="POST" id="chatForm">
-        <div id="txt" class="input" autocomplete="off" autofocus="on" contenteditable="true" placeholder="Enter message here..."></div>
-        <button>Send</button>
-    </form>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
-      // submit text message without reload/refresh the page
-      $('form').submit(function(e){
-        e.preventDefault(); // prevents page reloading
-        $('#txt').focus();
-    
-        if($('#txt').text()){
-            // Append our message to the chat window
-            let message = $('#txt').text();
-            $('#messages').append($('<li id="user_input">').html(message));
+      const form = document.getElementById('chatForm');
+      const input = document.getElementById('txt');
+      const messages = document.getElementById('messages');
 
-            // Send the message
-            $.get("/message", { message: $('#txt').text()}).done(function(data){
-                $('#messages').append($('<li id="bot_response">').html(data));
-                // Auto Scroll to the bottom of the page if the content goes out of the viewport
-                $('html, body').animate({scrollTop:$(document).height()}, 'slow');
-            });
-            // Auto clear the input box once the message has been sent
-            $('#txt').text('');
+      function addMessage(text, who) {
+        const row = document.createElement('div');
+        row.className = 'message ' + who;
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.textContent = text;
+        row.appendChild(bubble);
+        messages.appendChild(row);
+        messages.scrollTop = messages.scrollHeight;
+        return row;
+      }
+
+      function showTyping() {
+        const row = document.createElement('div');
+        row.className = 'message bot';
+        row.innerHTML = '<div class="bubble typing"><span></span><span></span><span></span></div>';
+        messages.appendChild(row);
+        messages.scrollTop = messages.scrollHeight;
+        return row;
+      }
+
+      function resize() {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 140) + 'px';
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const message = input.value.trim();
+        if (!message) return;
+
+        addMessage(message, 'user');
+        input.value = '';
+        resize();
+        input.focus();
+
+        const typing = showTyping();
+        try {
+          const res = await fetch('/message?' + new URLSearchParams({ message: message }));
+          const data = await res.text();
+          typing.remove();
+          addMessage(res.ok ? data : 'Sorry, something went wrong on my end.', 'bot');
+        } catch (err) {
+          typing.remove();
+          addMessage('Sorry, I could not reach the server.', 'bot');
         }
-
-        return false;
       });
 
-      /*  Prevent the message input from inserting a new line when ENTER key is pressed
-          Instead set ENTER to be used for sending messages and a combination of keys - SHIFT + ENTER to be used for adding a new line 
-      */
-      $('div[contenteditable]').keydown(function(e) {
-        if (!e) {
-            e = window.event;
-        }
-        if (e.keyCode == 13){
-            if (!event.shiftKey){ 
-                $('form').submit();
-                if (e.preventDefault) {
-                    e.preventDefault();
-                } else {
-                    e.returnValue = false;
-                }
-            }
+      // ENTER sends the message, SHIFT + ENTER adds a new line
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          form.requestSubmit();
         }
       });
+
+      input.addEventListener('input', resize);
     </script>
   </body>
 </html>
